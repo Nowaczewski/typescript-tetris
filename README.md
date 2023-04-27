@@ -1,9 +1,2 @@
-# Typescript Tetris!
-
-## Contriubtions
-
-Jack Nowacewski
-
-## Purpose
-
-This is Tetris made with typescript! I made this app with the purpose of learning a new skill.
+# react-tetris-with-typescript
+These are the files used in the course on my channel www.youtube.com/weibenfalk
