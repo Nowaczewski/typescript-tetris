@@ -1,5 +1,5 @@
 import React from "react";
-import { createStage } from "./gameHelpers";
+import { createStage, isColliding } from "./gameHelpers";
 
 // import Hooks
 
@@ -26,7 +26,9 @@ const App: React.FC = () => {
   const { stage, setStage } = useStage(player, resetPlayer);
 
   const movePlayer = (dir: number) => {
-    updatePlayerPos({ x: dir, y: 0, collided: false });
+    if (!isColliding(player, stage, { x: dir, y: 0 })) {
+      updatePlayerPos({ x: dir, y: 0, collided: false });
+    }
   };
 
   const move = ({
@@ -36,23 +38,49 @@ const App: React.FC = () => {
     keyCode: number;
     repeat: boolean;
   }): void => {
-    if (keyCode === 37) {
+    if (keyCode === 123) {
       movePlayer(-1);
-    } else if (keyCode === 39) {
+    } else if (keyCode === 124) {
       movePlayer(1);
-    } else if (keyCode === 40) {
+    } else if (keyCode === 125) {
       if (repeat) return;
       setDropTime(30);
-    } else if (keyCode === 38) {
+    } else if (keyCode === 126) {
       // implement later
     }
   };
+
+  const drop = (): void => {
+    if (!isColliding(player, stage, { x: 0, y: 1 })) {
+      updatePlayerPos({ x: 0, y: 1, collided: false });
+    } else {
+      // game over
+      if (player.pos.y < 1) {
+        console.log("GAME OVER!");
+        setGameOver(true);
+        setDropTime(null);
+      }
+      updatePlayerPos({ x: 0, y: 0, collided: true });
+    }
+  };
+
+  useInterval(() => {
+    drop();
+  }, dropTime);
 
   const keyUp = ({ keyCode }: { keyCode: number }): void => {
     // change the drop time speed when user releases down arrow
     if (keyCode === 40) {
       setDropTime(1000);
     }
+  };
+
+  const handleStartGame = (): void => {
+    if (gameArea.current) gameArea.current.focus();
+    setStage(createStage());
+    setDropTime(1000);
+    resetPlayer();
+    setGameOver(false);
   };
 
   return (
@@ -68,7 +96,7 @@ const App: React.FC = () => {
           {gameOver ? (
             <>
               <Display gameOver={gameOver} text="Game Over" />
-              <StartButton callback={() => null} />
+              <StartButton callback={handleStartGame} />
             </>
           ) : (
             <>
@@ -78,7 +106,7 @@ const App: React.FC = () => {
             </>
           )}
         </div>
-        <Stage stage={createStage()} />
+        <Stage stage={stage} />
       </StyledTetris>
     </StyledTetrisWrapper>
   );
