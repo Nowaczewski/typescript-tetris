@@ -15,6 +15,7 @@ export const useStage = (player: PLAYER, resetPlayer: () => void) => {
 
     setRowsCleared(0);
 
+    // clearing rows if full
     const sweepRows = (newStage: STAGE): STAGE => {
       return newStage.reduce((ack, row) => {
         // If we don't find a 0 it means that the row is full and should be cleared
@@ -32,7 +33,7 @@ export const useStage = (player: PLAYER, resetPlayer: () => void) => {
         return ack;
       }, [] as STAGE);
     };
-
+    // clear stage upon restart/if stage is full
     const updateStage = (prevStage: STAGE): STAGE => {
       // First flush the stage
       // If it says "clear" but don't have a 0 it means that it's the players move and should be cleared
