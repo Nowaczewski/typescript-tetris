@@ -23,8 +23,16 @@ const App: React.FC = () => {
 
   const { player, updatePlayerPos, resetPlayer, playerRotate } = usePlayer();
   const { stage, setStage, rowsCleared } = useStage(player, resetPlayer);
-  const { score, setScore, rows, setRows, level, setLevel } =
-    useGameStatus(rowsCleared);
+  const {
+    score,
+    setScore,
+    rows,
+    setRows,
+    level,
+    setLevel,
+    highScores,
+    setHighScores,
+  } = useGameStatus(rowsCleared, gameOver);
 
   const movePlayer = (dir: number) => {
     if (!isColliding(player, stage, { x: dir, y: 0 })) {
@@ -115,6 +123,7 @@ const App: React.FC = () => {
             <>
               <Display gameOver={gameOver} text="Game Over!" />
               <StartButton callback={handleStartGame} />
+              <Display text={`High Score: ${highScores}`} />
             </>
           ) : (
             <>

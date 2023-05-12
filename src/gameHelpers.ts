@@ -3,9 +3,11 @@ import { STAGE } from "./hooks/useStage";
 import { STAGE_WIDTH, STAGE_HEIGHT } from "./setup";
 import { TETROMINOS } from "./setup";
 
+// spawn Stage
 export const createStage = () =>
   Array.from(Array(STAGE_HEIGHT), () => Array(STAGE_WIDTH).fill([0, "clear"]));
 
+// randomize tetromino shape
 export const randomTetromino = () => {
   const tetrominos = [
     "I",
@@ -21,6 +23,7 @@ export const randomTetromino = () => {
   return TETROMINOS[randTetromino];
 };
 
+// set up Collision for walls of stage
 export const isColliding = (
   player: PLAYER,
   stage: STAGE,
