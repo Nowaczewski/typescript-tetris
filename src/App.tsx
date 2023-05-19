@@ -1,5 +1,6 @@
 import React from "react";
 import { createStage, isColliding } from "./gameHelpers";
+// import tetris music
 import tetrisMusic from "./music/tetris.mp4";
 
 // Custom hooks
