@@ -1,5 +1,6 @@
 import React from "react";
 import { createStage, isColliding } from "./gameHelpers";
+import tetrisMusic from "./music/tetris.mp4";
 
 // Custom hooks
 import { useInterval } from "./hooks/useInterval";
@@ -16,8 +17,11 @@ import StartButton from "./components/StartButton/StartButton";
 import { StyledTetrisWrapper, StyledTetris } from "./App.styles";
 
 const App: React.FC = () => {
+  const tetrisAudio = new Audio(tetrisMusic);
+
   const [dropTime, setDroptime] = React.useState<null | number>(null);
   const [gameOver, setGameOver] = React.useState(true);
+  const [isMusicPlaying, setIsMusicPlaying] = React.useState(false);
 
   const gameArea = React.useRef<HTMLDivElement>(null);
 
@@ -60,6 +64,11 @@ const App: React.FC = () => {
     setLevel(1);
     setRows(0);
     setGameOver(false);
+
+    // Play music
+    tetrisAudio.currentTime = 0;
+    tetrisAudio.play();
+    setIsMusicPlaying(true);
   };
 
   const move = ({
@@ -100,6 +109,9 @@ const App: React.FC = () => {
         console.log("Game over!");
         setGameOver(true);
         setDroptime(null);
+        // Stop music
+        tetrisAudio.pause();
+        setIsMusicPlaying(false);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
@@ -117,6 +129,8 @@ const App: React.FC = () => {
       onKeyUp={keyUp}
       ref={gameArea}
     >
+      {isMusicPlaying && <audio src={tetrisMusic} autoPlay loop />}
+
       <StyledTetris>
         <div className="display">
           {gameOver ? (
