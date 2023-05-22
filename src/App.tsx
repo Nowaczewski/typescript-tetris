@@ -130,6 +130,7 @@ const App: React.FC = () => {
       onKeyUp={keyUp}
       ref={gameArea}
     >
+      {/* audio loop */}
       {isMusicPlaying && <audio src={tetrisMusic} autoPlay loop />}
 
       <StyledTetris>
