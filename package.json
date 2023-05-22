@@ -1,8 +1,11 @@
 {
   "name": "react-tetris-ts",
   "version": "2.0.0",
+  "homepage": "https://nowaczewski.github.io/typescript-tetris/",
   "scripts": {
     "dev": "vite",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "tsc && vite build",
     "serve": "vite preview"
   },
