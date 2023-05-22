@@ -1,2 +1,12 @@
 # react-tetris-with-typescript
-These are the files used in the course on my channel www.youtube.com/weibenfalk
+
+## Purpose
+
+This app is for people who enjoy Tetris add setting the high score!
+
+## Contributors
+
+WeibenFalk
+www.youtube.com/weibenfalk
+
+Jack Nowaczewski
